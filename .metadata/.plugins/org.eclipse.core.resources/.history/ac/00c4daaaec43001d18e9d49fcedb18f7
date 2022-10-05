@@ -1,0 +1,46 @@
+package com.bba.todo.controllers;
+
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.bba.todo.entities.Todo;
+import com.bba.todo.repository.TodoRepository;
+
+
+public class TodoRestController {
+	@Autowired
+	private TodoRepository todoRepository;
+	
+	// List of all virtual visit
+	@GetMapping(value="/todoList")
+	public List<Todo> listVirtualVisit() throws IOException{
+		return todoRepository.findAll();
+	}
+	
+	// Find one Virtual Visit by this Id
+	@GetMapping(value="/listvirtualVisits/{id}")
+	public VirtualVisit listVirtualVisitById(@PathVariable(name="id") Long id){
+		return virtualVisitRepository.findById(id).get();
+	}
+	
+	// Mise à jour d'un produit
+	@PutMapping(value="/listvirtualVisits/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public VirtualVisit updateVirtualVisitById(@PathVariable(name="id") Long id, @RequestBody VirtualVisit virtualVisit) {
+		return virtualVisitRepository.save(virtualVisit);
+	}
+	
+	//Ajout d'une nouvelle virtual visit
+	@PostMapping(value="/listvirtualVisits", produces=MediaType.APPLICATION_JSON_VALUE)
+	public VirtualVisit postVirtualVisit(VirtualVisit virtualVisit) {
+		return virtualVisitRepository.save(virtualVisit);
+	}
+	
+	//Delete virtual visit
+	@DeleteMapping(value="/listvirtualVisits/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public void deleteVirtualVisitById(@PathVariable(name="id") Long id) {
+		virtualVisitRepository.deleteById(id);
+	}
+}

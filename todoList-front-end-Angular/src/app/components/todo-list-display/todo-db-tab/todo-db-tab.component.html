@@ -1,0 +1,50 @@
+<p>todo-db-tab works!</p>
+<div class="d-grid gap-2" *ngIf="todoList">
+    <div><br></div>
+    <div class="container-fluid">
+      <button (click)="onCreateNewtodo()" class="btn btn-success btn-lg mr-1">New Todo</button>
+    </div>
+    <br>
+    <form #f="ngForm" (ngSubmit)="onChercher(f.value)">
+      <div class="form-group">
+        <label>Keyword : </label><span> </span>
+        <input type="text" name="keyword" ngModel>
+        <button type="submit" class="btn btn-primary">Chercher</button>
+      </div>
+    </form>
+    <div class="container-fluid" >
+      <table class="table table-primary">
+        <thead>
+          <tr>
+            <th scope="col">todoId</th>
+            <th scope="col">Author name</th>
+            <th scope="col">title</th>
+            <th scope="col">description</th>
+            <th scope="col">todo type</th>
+            <th scope="col">quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of todoList._embedded.todos">
+            <td>{{t.id}}</td>
+            <td>{{t.authorName}}</td>
+            <td>{{t.title}}</td>
+            <td>{{t.description}}</td>
+            <td>{{t.todoType}}</td>
+            <td>{{t.quantity}}</td>
+            <td><button type="button" class="btn btn-primary" (click)="onEditTodo(t)"><span class="fa fa-edit"></span></button></td>
+            <td><button type="button" class="btn btn-danger" (click)="onDeleteTodo(t)"><span class="fa fa-trash-o"></span></button></td>
+          </tr>
+        </tbody>
+      </table>
+      <nav>
+        <ul class="pagination" *ngIf="pages">
+          <li [ngClass]= "i==currentPage?'active':''" class="page-item" *ngFor="let p of pages; let i=index">
+            <a class="page-link clickable"  (click)="onPageTodo(i)">{{i}}</a>
+          </li>
+        </ul>
+      </nav>
+      <br>
+    </div>
+  </div>
+  
